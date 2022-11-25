@@ -60,6 +60,22 @@
         top: 0px;
         right: 0px;
 }
+#SumSquare{
+            text-align: right;
+        }
+        #CountyName{
+            text-align: right;
+        }
+        #population{
+            text-align: right;
+        }
+        #populationSumSquare{
+            text-align: right;
+            justify-content: right;
+        }
+        #GiniIndex{
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -70,6 +86,12 @@
         <h1>Population in MA, 2010</h1>
         <h3>Rahul Bharadwaaj</h3>
       </div>
+      <div id="CountyName">
+    </div>
+    <div id="GiniIndex"></div>
+    <div id="SumSquare"></div>
+    <div id="population"></div>
+    <div id="populationSumSquare"></div>
     
                        
     
@@ -155,6 +177,11 @@
 
     
             const tooltip = d3.select("#tooltip");
+            const CountyName = d3.select("#CountyName");
+            const SumSquare = d3.select("#SumSquare");
+            const population = d3.select("#population");
+            const GiniIndex = d3.select("#GiniIndex");
+            const populationSumSquare = d3.select("#populationSumSquare");
 
             let svg = d3.select("#container").append("svg")
                 .attr("viewBox",`0 0 ${window_dims.width} ${window_dims.height}`)
@@ -177,13 +204,14 @@
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", .9)
-                    tooltip.html(
-                    "<div class='tooltipData'>TOWN: "+d['properties']['TOWN']+"</div>" +
-                    "<div class='tooltipData'>POP2010: "+d['properties']['POP2010']+"</div>" +
-                    "<div class='tooltipData'>Sum square: "+d['properties']['SUM_SQUARE']+"</div>" +
-                    "<div class='tooltipData'>Population over area: "+d['properties']['POP2010']/d['properties']['SUM_SQUARE']+"</div>" +
-                    "<div class='tooltipData'>Gini_index[2010]: "+gini.get(d.properties.FIPS_STCO.toString())[0]['Estimate_Gini_Index']+"</div>" +
-                    "<div class='tooltipData'></div>")
+                        tooltip.html(d['properties']['TOWN'])
+                        .style("left", m.clientX + "px")
+                        .style("top", m.clientY + "px")
+                    CountyName.html('Town:'+ d['properties']['TOWN'])
+                    GiniIndex.html('gini:' +gini.get(d.properties.FIPS_STCO.toString())[0]['Estimate_Gini_Index'])
+                    SumSquare.html('sum_square:' +d['properties']['SUM_SQUARE'])
+                    population.html('POP2010:' +d['properties']['POP2010'])
+                    populationSumSquare.html('POP over Area:' +d['properties']['POP2010']/d['properties']['SUM_SQUARE'])
                         .style("left", m.clientX + "px")
                         .style("top", m.clientY + "px")
                   
